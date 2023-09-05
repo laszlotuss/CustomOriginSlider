@@ -9,23 +9,39 @@ import SwiftUI
 import CenterOriginSlider
 
 struct ContentView: View {
-    @State var value: Float = 0
+    
+    @State var value1: Float = 0
     @State var value2: Float = 0
+    @State var value3: Float = 60
+    @State var value4: Float = 20
+    
     var body: some View {
         ZStack {
-            Color.black.ignoresSafeArea()
-            
             VStack {
+                Text("Value1: \(value1)")
                 CenterOriginSlider(
-                            minValue: -100,
-                            maxValue: 100,
-                            sliderValue: $value
+                            minValue: -30,
+                            maxValue: 50,
+                            sliderValue: $value1
                         )
                 
+                Text("Value2: \(value2)")
+                CenterOriginSlider(
+                            minValue: 0,
+                            maxValue: 100,
+                            sliderValue: $value2)
+                
+                Text("Value3: \(value3)")
+                CenterOriginSlider(
+                            minValue: 50,
+                            maxValue: 100,
+                            sliderValue: $value3)
+                
+                Text("Value4: \(value4)")
                 CenterOriginSlider(
                     minValue: -50,
                     maxValue: 50,
-                    sliderValue: $value2,
+                    sliderValue: $value4,
                     thumbSize: 24,
                     thumbColor: .red,
                     guideBarCornerRadius: 4,
@@ -39,8 +55,10 @@ struct ContentView: View {
                 )
                         
             }
+            .frame(height: 300)
             .padding()
         }
+        .preferredColorScheme(.dark)
     }
 }
 

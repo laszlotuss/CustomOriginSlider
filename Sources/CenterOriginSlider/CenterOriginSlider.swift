@@ -32,6 +32,9 @@ public struct CenterOriginSlider: View {
 
     /// The maximum value the slider can take.
     public let maxValue: Float
+    
+    /// The default value where the slider center is. If not set, its 0 or the closest value inside the min/max range
+    public let defaultValue: Float
 
     /// The increment by which the value should change. If this is nil, the value changes continuously.
     public let increment: Float?
@@ -69,12 +72,22 @@ public struct CenterOriginSlider: View {
     /// The background color of the whole View.
     public let backgroundColor: Color
     
-    @State public var accumulatedWidth: CGFloat = 0
-    @State public var offset: CGSize = .zero
+    /// Left right padding for the slider
+    public let sidePadding: CGFloat = 16
+    
+    /// Adjust **sliderValue** if outside of min/max region
+    public let adjustSliderValueIfNeeded: Bool = false
+    
+    // MARK: -
+    
+    @State private var offsetX: CGFloat = 0
+    
+    // MARK: -
     
     public init(
         minValue: Float,
         maxValue: Float,
+        defaultValue: Float = 0,
         increment: Float? = nil,
         sliderValue: Binding<Float>,
         thumbSize: CGFloat = 16,
@@ -102,65 +115,58 @@ public struct CenterOriginSlider: View {
         self.shadow = shadow
         self.shadowColor = shadowColor
         self.backgroundColor = backgroundColor
+        self.defaultValue = min(max(defaultValue, minValue), maxValue)
     }
     
     public var body: some View {
         GeometryReader { geometry in
-            let sliderWidth = geometry.size.width - 32
-            let valueRange = maxValue - minValue
+            let sliderWidth = geometry.size.width - (sidePadding * 2)
             let dragGesture = DragGesture()
                 .onChanged({ value in
-                    let width = value.translation.width + accumulatedWidth
-                    let limitedWidth = max(min(width, sliderWidth / 2 - thumbSize / 2), -sliderWidth / 2 + thumbSize / 2)
-                    offset.width = limitedWidth
+                    let dragX = value.location.x - geometry.frame(in: .local).minX
+                    let dragValue = Float(dragX / sliderWidth) * (maxValue - minValue) + minValue
 
-                    let sliderProgress = (limitedWidth + sliderWidth / 2 - thumbSize / 2) / (sliderWidth - thumbSize)
-                    let rawValue = minValue + Float(sliderProgress) * valueRange
-                    
-                    if let unwrappedIncrement = increment {
-                        sliderValue = round(rawValue / unwrappedIncrement) * unwrappedIncrement
-                    } else {
-                        sliderValue = round(rawValue)
-                    }
+                    sliderValue = min(max(dragValue, minValue), maxValue)
                 })
-                .onEnded({ value in
-                    accumulatedWidth = offset.width
-                })
+            let restrictedSliderValue = max(min(sliderValue, maxValue), minValue)
+            let sliderX = CGFloat((restrictedSliderValue - minValue) / (maxValue - minValue)) * sliderWidth
+            let defaultX = CGFloat((defaultValue - minValue) / (maxValue - minValue)) * sliderWidth
+            
             VStack(alignment: .center) {
-                ZStack(alignment: .center) {
+                ZStack(alignment: .leading) {
+                    
                     RoundedRectangle(cornerRadius: guideBarCornerRadius)
                         .frame(width: sliderWidth, height: guideBarHeight)
                         .foregroundColor(guideBarColor)
-                    HStack(spacing: 0) {
-                        HStack {
-                            Spacer()
-                            Rectangle()
-                                .frame(width: max(sliderValue < 0 ? CGFloat((-sliderValue / valueRange) * Float(sliderWidth - thumbSize)) : 0, 0), height: trackingBarHeight)
-                                .foregroundColor(trackingBarColor)
-                        }
-                        .frame(maxWidth: .infinity)
-                        HStack {
-                            Rectangle()
-                                .frame(width: max(sliderValue > 0 ? CGFloat((sliderValue / valueRange) * Float(sliderWidth - thumbSize)) : 0, 0), height: trackingBarHeight)
-                                .foregroundColor(trackingBarColor)
-                            Spacer()
-                        }
-                        .frame(maxWidth: .infinity)
+                    
+                    HStack {
+                        let width = sliderX - defaultX
+                        Spacer().frame(width: abs(width < 0 ? defaultX + width : defaultX))
+                        Rectangle()
+                            .frame(width: abs(width), height: guideBarHeight)
+                            .foregroundColor(trackingBarColor)
                     }
-                    .frame(maxWidth: .infinity)
+
+                    
                     Circle()
                         .frame(width: thumbSize, height: thumbSize)
                         .foregroundColor(thumbColor)
-                        .offset(offset)
+                        .offset(x: offsetX)
                         .shadow(color: shadowColor, radius: shadow)
                         .gesture(dragGesture)
                         .onChange(of: sliderValue) { value in
-                            let sliderProgress = (value - minValue) / valueRange
-                            let newWidth = CGFloat(sliderProgress) * (sliderWidth - thumbSize) - sliderWidth / 2 + thumbSize / 2
-                            offset.width = newWidth
+                            let restrictedSliderValue = max(min(value, maxValue), minValue)
+                            if adjustSliderValueIfNeeded, value != restrictedSliderValue {
+                                sliderValue = restrictedSliderValue
+                            } else {
+                                offsetX = CGFloat((restrictedSliderValue - minValue) / (maxValue - minValue)) * sliderWidth
+                            }
                         }
                 }
-                .padding(.horizontal, 16)
+                .padding(.horizontal, sidePadding)
+                .onAppear() {
+                    offsetX = sliderX
+                }
             }
             .frame(maxHeight: .infinity)
             .background(backgroundColor)
@@ -168,4 +174,77 @@ public struct CenterOriginSlider: View {
     }
 }
 
+// MARK: - SwiftUI Debug Preview
 
+struct CenterOriginSlider_Previews: PreviewProvider {
+    
+    private struct CenterOriginSliderDemo: View {
+        
+        @State var value1: Float = 0
+        @State var value2: Float = 0
+        
+        var body: some View {
+            VStack {
+                Text("value1: \(value1)")
+                
+                CenterOriginSlider(
+                    minValue: -100,
+                    maxValue: 100,
+                    defaultValue: 10,
+                    sliderValue: $value1
+                ).addDebugTitles()
+                
+                CenterOriginSlider(
+                    minValue: -30,
+                    maxValue: 50,
+                    defaultValue: 20,
+                    sliderValue: $value1
+                ).addDebugTitles()
+                
+                CenterOriginSlider(
+                    minValue: 0,
+                    maxValue: 100,
+                    sliderValue: $value1
+                ).addDebugTitles()
+                
+                CenterOriginSlider(
+                    minValue: -50,
+                    maxValue: 50,
+                    sliderValue: $value2,
+                    thumbSize: 24,
+                    thumbColor: .red,
+                    guideBarCornerRadius: 4,
+                    guideBarColor: .blue.opacity(0.2),
+                    guideBarHeight: 6,
+                    trackingBarColor: .blue,
+                    trackingBarHeight: 6,
+                    shadow: 2,
+                    shadowColor: .gray,
+                    backgroundColor: .clear
+                ).addDebugTitles()
+            }
+            .frame(width: 300, height: 300)
+            .preferredColorScheme(.dark)
+        }
+    }
+    
+    static var previews: some View {
+        CenterOriginSliderDemo()
+    }
+}
+
+extension CenterOriginSlider {
+    
+    func addDebugTitles() -> some View {
+        VStack {
+            self
+            HStack {
+                Text(String(format: "%.2f", minValue))
+                Spacer()
+                Text(String(format: "%.2f", defaultValue))
+                Spacer()
+                Text(String(format: "%.2f", maxValue))
+            }
+        }
+    }
+}
