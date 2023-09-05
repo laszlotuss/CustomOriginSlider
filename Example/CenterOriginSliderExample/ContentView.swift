@@ -10,38 +10,34 @@ import CustomOriginSlider
 
 struct ContentView: View {
     
-    @State var value1: Float = 0
-    @State var value2: Float = 0
-    @State var value3: Float = 60
-    @State var value4: Float = 20
+    @State var value: Float = 0
+    
+    @State var showModal = false
     
     var body: some View {
         ZStack {
             VStack {
-                Text("Value1: \(value1)")
+                Text("Value: \(value)")
                 CustomOriginSlider(
                             minValue: -30,
                             maxValue: 50,
-                            sliderValue: $value1
+                            sliderValue: $value
                         )
                 
-                Text("Value2: \(value2)")
                 CustomOriginSlider(
                             minValue: 0,
                             maxValue: 100,
-                            sliderValue: $value2)
+                            sliderValue: $value)
                 
-                Text("Value3: \(value3)")
                 CustomOriginSlider(
                             minValue: 50,
                             maxValue: 100,
-                            sliderValue: $value3)
+                            sliderValue: $value)
                 
-                Text("Value4: \(value4)")
                 CustomOriginSlider(
                     minValue: -50,
                     maxValue: 50,
-                    sliderValue: $value4,
+                    sliderValue: $value,
                     thumbSize: 24,
                     thumbColor: .red,
                     guideBarCornerRadius: 4,
@@ -53,11 +49,25 @@ struct ContentView: View {
                     shadowColor: .gray,
                     backgroundColor: .clear
                 )
-                        
+                 
+                Button("Present Modally") {
+                    showModal.toggle()
+                }.padding(.top, 1)
             }
             .frame(height: 300)
             .padding()
         }
+        .sheet(isPresented: $showModal, content: {
+            CustomOriginSlider(
+                minValue: -100,
+                maxValue: 100,
+                defaultValue: 10,
+                sliderValue: $value
+            )
+            .presentationDetents([.height(100)])
+            .preferredColorScheme(.dark)
+            .frame(maxWidth: 300, maxHeight: 80)
+        })
         .preferredColorScheme(.dark)
     }
 }

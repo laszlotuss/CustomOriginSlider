@@ -80,7 +80,7 @@ public struct CustomOriginSlider: View {
     
     // MARK: -
     
-    @State private var offsetX: CGFloat = 0
+    @State private var offsetX: CGFloat = .nan
     
     // MARK: -
     
@@ -149,24 +149,30 @@ public struct CustomOriginSlider: View {
                         }
                     }
                     
-                    Circle()
-                        .frame(width: thumbSize, height: thumbSize)
-                        .foregroundColor(thumbColor)
-                        .offset(x: offsetX)
-                        .shadow(color: shadowColor, radius: shadow)
-                        .gesture(dragGesture)
-                        .onChange(of: sliderValue) { value in
-                            let restrictedSliderValue = max(min(value, maxValue), minValue)
-                            if adjustSliderValueIfNeeded, value != restrictedSliderValue {
-                                sliderValue = restrictedSliderValue
-                            } else {
-                                offsetX = CGFloat((restrictedSliderValue - minValue) / (maxValue - minValue)) * sliderWidth
+                    
+                    if geometry.size != .zero {
+                        let offsetX = offsetX.isNaN ? sliderX : offsetX
+                        Circle()
+                            .frame(width: thumbSize, height: thumbSize)
+                            .foregroundColor(thumbColor)
+                            .offset(x: offsetX)
+                            .shadow(color: shadowColor, radius: shadow)
+                            .gesture(dragGesture)
+                            .onChange(of: sliderValue) { value in
+                                let restrictedSliderValue = max(min(value, maxValue), minValue)
+                                if adjustSliderValueIfNeeded, value != restrictedSliderValue {
+                                    sliderValue = restrictedSliderValue
+                                } else {
+                                    self.offsetX = CGFloat((restrictedSliderValue - minValue) / (maxValue - minValue)) * sliderWidth
+                                }
                             }
-                        }
+                    }
                 }
                 .padding(.horizontal, sidePadding)
                 .onAppear() {
-                    offsetX = sliderX
+                    if geometry.size != .zero {
+                        offsetX = sliderX
+                    }
                 }
             }
             .frame(maxHeight: .infinity)
@@ -183,10 +189,16 @@ struct CustomOriginSlider_Previews: PreviewProvider {
         
         @State var value1: Float = 0
         @State var value2: Float = 0
+        @State var showModal = false
         
         var body: some View {
             VStack {
-                Text("value1: \(value1)")
+                HStack {
+                    Text("value1: \(value1)")
+                    Button("Present Modally") {
+                        showModal.toggle()
+                    }.padding(.top, 1)
+                }
                 
                 CustomOriginSlider(
                     minValue: -100,
@@ -226,7 +238,18 @@ struct CustomOriginSlider_Previews: PreviewProvider {
             }
             .frame(width: 300, height: 300)
             .preferredColorScheme(.dark)
+            .sheet(isPresented: $showModal, content: {
+                CustomOriginSlider(
+                    minValue: -100,
+                    maxValue: 100,
+                    defaultValue: 10,
+                    sliderValue: $value1
+                ).addDebugTitles()
+                    .preferredColorScheme(.dark)
+                    .frame(maxWidth: 300, maxHeight: 80)
+            })
         }
+
     }
     
     static var previews: some View {
