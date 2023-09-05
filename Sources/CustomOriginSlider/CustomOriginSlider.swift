@@ -120,7 +120,7 @@ public struct CustomOriginSlider: View {
     
     public var body: some View {
         GeometryReader { geometry in
-            let sliderWidth = geometry.size.width - (sidePadding * 2)
+            let sliderWidth = max(geometry.size.width - (sidePadding * 2), 1)
             let dragGesture = DragGesture()
                 .onChanged({ value in
                     let dragX = value.location.x - geometry.frame(in: .local).minX
@@ -139,14 +139,15 @@ public struct CustomOriginSlider: View {
                         .frame(width: sliderWidth, height: guideBarHeight)
                         .foregroundColor(guideBarColor)
                     
-                    HStack {
-                        let width = sliderX - defaultX
-                        Spacer().frame(width: abs(width < 0 ? defaultX + width : defaultX))
-                        Rectangle()
-                            .frame(width: abs(width), height: guideBarHeight)
-                            .foregroundColor(trackingBarColor)
+                    let width = sliderX - defaultX
+                    if width.isFinite, !width.isZero {
+                        HStack {
+                            Spacer().frame(width: abs(width < 0 ? defaultX + width : defaultX))
+                            Rectangle()
+                                .frame(width: abs(width), height: guideBarHeight)
+                                .foregroundColor(trackingBarColor)
+                        }
                     }
-
                     
                     Circle()
                         .frame(width: thumbSize, height: thumbSize)
