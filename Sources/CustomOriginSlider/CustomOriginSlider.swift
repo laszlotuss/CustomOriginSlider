@@ -25,7 +25,7 @@
 ///
 import SwiftUI
 
-public struct CenterOriginSlider: View {
+public struct CustomOriginSlider: View {
 
     /// The minimum value the slider can take.
     public let minValue: Float
@@ -176,9 +176,9 @@ public struct CenterOriginSlider: View {
 
 // MARK: - SwiftUI Debug Preview
 
-struct CenterOriginSlider_Previews: PreviewProvider {
+struct CustomOriginSlider_Previews: PreviewProvider {
     
-    private struct CenterOriginSliderDemo: View {
+    private struct CustomOriginSliderDemo: View {
         
         @State var value1: Float = 0
         @State var value2: Float = 0
@@ -187,27 +187,27 @@ struct CenterOriginSlider_Previews: PreviewProvider {
             VStack {
                 Text("value1: \(value1)")
                 
-                CenterOriginSlider(
+                CustomOriginSlider(
                     minValue: -100,
                     maxValue: 100,
                     defaultValue: 10,
                     sliderValue: $value1
                 ).addDebugTitles()
                 
-                CenterOriginSlider(
+                CustomOriginSlider(
                     minValue: -30,
                     maxValue: 50,
                     defaultValue: 20,
                     sliderValue: $value1
                 ).addDebugTitles()
                 
-                CenterOriginSlider(
+                CustomOriginSlider(
                     minValue: 0,
                     maxValue: 100,
                     sliderValue: $value1
                 ).addDebugTitles()
                 
-                CenterOriginSlider(
+                CustomOriginSlider(
                     minValue: -50,
                     maxValue: 50,
                     sliderValue: $value2,
@@ -229,11 +229,11 @@ struct CenterOriginSlider_Previews: PreviewProvider {
     }
     
     static var previews: some View {
-        CenterOriginSliderDemo()
+        CustomOriginSliderDemo()
     }
 }
 
-extension CenterOriginSlider {
+extension CustomOriginSlider {
     
     func addDebugTitles() -> some View {
         VStack {

@@ -11,7 +11,7 @@
 		2A2B1A882A2C8BF900970D94 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A2B1A872A2C8BF900970D94 /* ContentView.swift */; };
 		2A2B1A8A2A2C8BFB00970D94 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 2A2B1A892A2C8BFB00970D94 /* Assets.xcassets */; };
 		2A2B1A8D2A2C8BFB00970D94 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 2A2B1A8C2A2C8BFB00970D94 /* Preview Assets.xcassets */; };
-		57D6442A2AA7672D0089F825 /* CenterOriginSlider in Frameworks */ = {isa = PBXBuildFile; productRef = 57D644292AA7672D0089F825 /* CenterOriginSlider */; };
+		57D644352AA7CB130089F825 /* CustomOriginSlider in Frameworks */ = {isa = PBXBuildFile; productRef = 57D644342AA7CB130089F825 /* CustomOriginSlider */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -20,7 +20,7 @@
 		2A2B1A872A2C8BF900970D94 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		2A2B1A892A2C8BFB00970D94 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		2A2B1A8C2A2C8BFB00970D94 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
-		57D644272AA767170089F825 /* CenterOriginSlider */ = {isa = PBXFileReference; lastKnownFileType = wrapper; name = CenterOriginSlider; path = ..; sourceTree = "<group>"; };
+		57D644332AA7C61F0089F825 /* CenterOriginSlider */ = {isa = PBXFileReference; lastKnownFileType = wrapper; name = CenterOriginSlider; path = ..; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -28,7 +28,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				57D6442A2AA7672D0089F825 /* CenterOriginSlider in Frameworks */,
+				57D644352AA7CB130089F825 /* CustomOriginSlider in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -75,7 +75,7 @@
 		57D644262AA767170089F825 /* Packages */ = {
 			isa = PBXGroup;
 			children = (
-				57D644272AA767170089F825 /* CenterOriginSlider */,
+				57D644332AA7C61F0089F825 /* CenterOriginSlider */,
 			);
 			name = Packages;
 			sourceTree = "<group>";
@@ -104,7 +104,7 @@
 			);
 			name = CenterOriginSliderExample;
 			packageProductDependencies = (
-				57D644292AA7672D0089F825 /* CenterOriginSlider */,
+				57D644342AA7CB130089F825 /* CustomOriginSlider */,
 			);
 			productName = CenterOriginSliderExample;
 			productReference = 2A2B1A822A2C8BF900970D94 /* CenterOriginSliderExample.app */;
@@ -366,9 +366,9 @@
 /* End XCConfigurationList section */
 
 /* Begin XCSwiftPackageProductDependency section */
-		57D644292AA7672D0089F825 /* CenterOriginSlider */ = {
+		57D644342AA7CB130089F825 /* CustomOriginSlider */ = {
 			isa = XCSwiftPackageProductDependency;
-			productName = CenterOriginSlider;
+			productName = CustomOriginSlider;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};
