@@ -1,13 +1,13 @@
 # CustomOriginSlider 
 
-CustomOriginSlider is an open-source SwiftUI package that provides a customizable center origin slider for your iOS projects. This slider allows users to select values in a range, either negative or positive, from a center origin point.
+CustomOriginSlider is an open-source SwiftUI package that provides a customizable origin slider for your iOS projects. This slider allows users to select values in a range, either negative or positive, from an origin point.
 
 This package provides a variety of customization options such as thumb size, color, guide bar style, tracking bar color, and more, making it a flexible choice for your user interface needs.
 
 ## Features
 
 - Set the minimum and maximum values for your slider.
-- Opt to increment values discretely or continuously.
+- Set the defaultValue value for set the center of your slider.
 - Customize the slider's thumb size, color, and shadow.
 - Style the guide bar with your choice of corner radius, color, and height.
 - Define the appearance of the tracking bar, including its color and height.
