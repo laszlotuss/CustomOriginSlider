@@ -10,7 +10,7 @@ import CustomOriginSlider
 
 struct ContentView: View {
     
-    @State var value: Float = 0
+    @State var value: Float = 25
     
     @State var showModal = false
     
@@ -20,9 +20,9 @@ struct ContentView: View {
                 Text("Value: \(value)")
                 CustomOriginSlider(
                             minValue: -30,
-                            maxValue: 50,
-                            sliderValue: $value
-                        )
+                            maxValue: 75,
+                            defaultValue: 50,
+                            sliderValue: $value)
                 
                 CustomOriginSlider(
                             minValue: 0,

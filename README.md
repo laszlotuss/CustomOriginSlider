@@ -72,6 +72,28 @@ CustomOriginSlider(
 )
 ```
 ![Example 2](screenshots/screen02.gif)
+
+The last example shows three slider with custom origin and the **sliderValue** of **25**. Note if the **defaultValue** is not set, it's either will be **0** or the closes value inside your **minValue** to **maxValue** interval.
+
+```
+CustomOriginSlider(
+	minValue: -30,
+	maxValue: 75,
+	defaultValue: 50,
+	sliderValue: $value)
+                
+CustomOriginSlider(
+	minValue: 0,
+	maxValue: 100,
+	sliderValue: $value)
+                
+CustomOriginSlider(
+	minValue: 50,
+	maxValue: 100,
+	sliderValue: $value)
+```
+![Example 3](screenshots/screen03.png)
+
 ## Contribution
 Contributions to the CustomOriginSlider project are welcome! Feel free to open a new issue or send a pull request, if you happen to find a bug, or would liek to add any new features.
 
