@@ -11,7 +11,7 @@
 		2A2B1A882A2C8BF900970D94 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A2B1A872A2C8BF900970D94 /* ContentView.swift */; };
 		2A2B1A8A2A2C8BFB00970D94 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 2A2B1A892A2C8BFB00970D94 /* Assets.xcassets */; };
 		2A2B1A8D2A2C8BFB00970D94 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 2A2B1A8C2A2C8BFB00970D94 /* Preview Assets.xcassets */; };
-		2A2B1A952A2C8EE400970D94 /* CenterOriginSlider in Frameworks */ = {isa = PBXBuildFile; productRef = 2A2B1A942A2C8EE400970D94 /* CenterOriginSlider */; };
+		57D6442A2AA7672D0089F825 /* CenterOriginSlider in Frameworks */ = {isa = PBXBuildFile; productRef = 57D644292AA7672D0089F825 /* CenterOriginSlider */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -20,6 +20,7 @@
 		2A2B1A872A2C8BF900970D94 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		2A2B1A892A2C8BFB00970D94 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		2A2B1A8C2A2C8BFB00970D94 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
+		57D644272AA767170089F825 /* CenterOriginSlider */ = {isa = PBXFileReference; lastKnownFileType = wrapper; name = CenterOriginSlider; path = ..; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -27,7 +28,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				2A2B1A952A2C8EE400970D94 /* CenterOriginSlider in Frameworks */,
+				57D6442A2AA7672D0089F825 /* CenterOriginSlider in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -37,8 +38,10 @@
 		2A2B1A792A2C8BF900970D94 = {
 			isa = PBXGroup;
 			children = (
+				57D644262AA767170089F825 /* Packages */,
 				2A2B1A842A2C8BF900970D94 /* CenterOriginSliderExample */,
 				2A2B1A832A2C8BF900970D94 /* Products */,
+				57D644282AA7672D0089F825 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -69,6 +72,21 @@
 			path = "Preview Content";
 			sourceTree = "<group>";
 		};
+		57D644262AA767170089F825 /* Packages */ = {
+			isa = PBXGroup;
+			children = (
+				57D644272AA767170089F825 /* CenterOriginSlider */,
+			);
+			name = Packages;
+			sourceTree = "<group>";
+		};
+		57D644282AA7672D0089F825 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -86,7 +104,7 @@
 			);
 			name = CenterOriginSliderExample;
 			packageProductDependencies = (
-				2A2B1A942A2C8EE400970D94 /* CenterOriginSlider */,
+				57D644292AA7672D0089F825 /* CenterOriginSlider */,
 			);
 			productName = CenterOriginSliderExample;
 			productReference = 2A2B1A822A2C8BF900970D94 /* CenterOriginSliderExample.app */;
@@ -117,7 +135,6 @@
 			);
 			mainGroup = 2A2B1A792A2C8BF900970D94;
 			packageReferences = (
-				2A2B1A932A2C8EE400970D94 /* XCRemoteSwiftPackageReference "CenterOriginSlider" */,
 			);
 			productRefGroup = 2A2B1A832A2C8BF900970D94 /* Products */;
 			projectDirPath = "";
@@ -348,21 +365,9 @@
 		};
 /* End XCConfigurationList section */
 
-/* Begin XCRemoteSwiftPackageReference section */
-		2A2B1A932A2C8EE400970D94 /* XCRemoteSwiftPackageReference "CenterOriginSlider" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/thompson-dean/CenterOriginSlider";
-			requirement = {
-				branch = main;
-				kind = branch;
-			};
-		};
-/* End XCRemoteSwiftPackageReference section */
-
 /* Begin XCSwiftPackageProductDependency section */
-		2A2B1A942A2C8EE400970D94 /* CenterOriginSlider */ = {
+		57D644292AA7672D0089F825 /* CenterOriginSlider */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = 2A2B1A932A2C8EE400970D94 /* XCRemoteSwiftPackageReference "CenterOriginSlider" */;
 			productName = CenterOriginSlider;
 		};
 /* End XCSwiftPackageProductDependency section */
