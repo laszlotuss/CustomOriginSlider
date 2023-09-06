@@ -120,7 +120,7 @@ public struct CustomOriginSlider: View {
     
     public var body: some View {
         GeometryReader { geometry in
-            let sliderWidth = max(geometry.size.width - (sidePadding * 2), 1)
+            let sliderWidth = max(geometry.size.width - (sidePadding * 2), 0)
             let dragGesture = DragGesture()
                 .onChanged({ value in
                     let dragX = value.location.x - geometry.frame(in: .local).minX
@@ -149,8 +149,7 @@ public struct CustomOriginSlider: View {
                         }
                     }
                     
-                    
-                    if geometry.size != .zero {
+                    if sliderWidth > 0 {
                         let offsetX = offsetX.isNaN ? sliderX : offsetX
                         Circle()
                             .frame(width: thumbSize, height: thumbSize)
@@ -170,7 +169,7 @@ public struct CustomOriginSlider: View {
                 }
                 .padding(.horizontal, sidePadding)
                 .onAppear() {
-                    if geometry.size != .zero {
+                    if sliderWidth > 0 {
                         offsetX = sliderX
                     }
                 }
