@@ -82,6 +82,8 @@ public struct CustomOriginSlider: View {
     
     @State private var offsetX: CGFloat = .nan
     
+    @Environment(\.layoutDirection) var layoutDirection
+    
     // MARK: -
     
     public init(
@@ -123,7 +125,9 @@ public struct CustomOriginSlider: View {
             let sliderWidth = max(geometry.size.width - (sidePadding * 2), 0)
             let dragGesture = DragGesture()
                 .onChanged({ value in
-                    let dragX = value.location.x - geometry.frame(in: .local).minX
+                    let dragX = layoutDirection == .rightToLeft
+                    ? geometry.frame(in: .local).minX - value.location.x
+                    : value.location.x - geometry.frame(in: .local).minX
                     let dragValue = Float(dragX / sliderWidth) * (maxValue - minValue) + minValue
 
                     sliderValue = min(max(dragValue, minValue), maxValue)
